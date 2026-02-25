@@ -1,0 +1,15 @@
+# Banco de dados
+db.sqlite3
+
+# Variáveis de ambiente
+.env
+
+# Python
+__pycache__/
+*.pyc
+
+# VS Code
+.vscode/
+
+# Outros
+*.log
