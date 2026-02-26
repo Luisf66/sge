@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-4">
+    <h3 class="display-6">
+        Deletar Marca
+    </h3>
+
+    <div class="card">
+        <div class="card-body">
+            <p class="card-text">
+                Continuar com a remoção da Marca : <strong>{{ object.name }}</strong> ?
+            </p>
+
+            <form method="POST">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger mt-3">
+                    Deletar
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <a href="{% url 'brand_list' %}" class="btn btn-secondary mt-3">
+        Voltar
+    </a>
+</div>
+
+{% endblock %}
