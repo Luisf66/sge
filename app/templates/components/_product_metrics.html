@@ -10,7 +10,7 @@
                         </h5>
 
                         <p class="card-text text-white font-weight-bold display-6">
-                            1000
+                            {{ product_metrics.total_quantity }}
                         </p>
                     </div>
                 </div>
@@ -24,7 +24,7 @@
                         </h5>
 
                         <p class="card-text text-white font-weight-bold display-6">
-                            R$ 50.000
+                            R$ {{ product_metrics.total_cost_price }}
                         </p>
                     </div>
                 </div>
@@ -38,7 +38,7 @@
                         </h5>
 
                         <p class="card-text text-white font-weight-bold display-6">
-                            R$ 95.000
+                            R$ {{ product_metrics.total_selling_price }}
                         </p>
                     </div>
                 </div>
@@ -52,7 +52,7 @@
                         </h5>
 
                         <p class="card-text text-white font-weight-bold display-6">
-                            R$ 45.000
+                            R$ {{ product_metrics.total_profit }}
                         </p>
                     </div>
                 </div>
