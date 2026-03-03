@@ -31,6 +31,8 @@
         <script>
             var dates_sale = JSON.parse('{{ dates_sales|safe }}');
             var sales_sale = JSON.parse('{{ values_sales|safe }}');
+
+            var dates_quantity_sales = JSON.parse('{{ daily_sales_quantity_data|safe }}');
             /*  Gráfico Superior Esquerdo -    */
             var config_sales = {
                 x: dates_sale,
@@ -50,7 +52,23 @@
 
             Plotly.newPlot('dailySalesChart', [config_sales], layout_sale);
             /*  Gráfico Superior Direito -    */
-            
+            var config_sales_quantity = {
+                x: dates_quantity_sales.dates,
+                y: dates_quantity_sales.values,
+                type: 'scatter',
+                mode: 'lines+markers',
+                line: { color: '#00d4ff', width: 3 }
+            };
+
+            var layout_sale_quantity = {
+                paper_bgcolor: '#212529',
+                plot_bgcolor: '#212529',
+                font: { color: '#e0e0e0' },
+                xaxis: { gridcolor: '#333' },
+                yaxis: { gridcolor: '#333' }
+            };
+
+            Plotly.newPlot('dailySalesQuantityChart', [config_sales_quantity], layout_sale_quantity);
         </script>
     </div>
 

@@ -11,11 +11,14 @@ def home(request):
     dates_sales = metrics.get_sales_data().get('dates')
     values_sales = metrics.get_sales_data().get('values')
 
+    daily_sales_quantity_data = metrics.get_daily_sales_quantity_data()
+
     context = {
         'product_metrics' : product_metrics,
         'sales_metrics' : sales_metrics,
         'dates_sales' : json.dumps(dates_sales),
-        'values_sales' : json.dumps(values_sales, default=float)
+        'values_sales' : json.dumps(values_sales, default=float),
+        'daily_sales_quantity_data' : json.dumps(daily_sales_quantity_data)
     }
 
     return render(request, 'home.html', context)
