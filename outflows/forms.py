@@ -25,3 +25,5 @@ class OutflowForm(forms.ModelForm):
             raise ValidationError(
                 f"Quantidade de {product.title} insuficiente. Quantidade disponível: {product.quantity}"
             )
+
+        return quantity

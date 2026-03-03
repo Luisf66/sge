@@ -10,4 +10,48 @@
 
     {% include 'components/_sales_metrics.html' %}
 
+    <script src="https://cdn.plot.ly/plotly-3.3.0.min.js" charset="utf-8"></script>
+    
+
+    <div class="row mt-4 justify-content-center">
+        <div class="col-md-6 text-center">
+            <h5 class="text-center mb-3">
+                Valor de Vendas (7 dias)
+            </h5>
+            <div id="dailySalesChart"></div>
+        </div>
+
+        <div class="col-md-6 text-center">
+            <h5 class="text-center mb-3">
+                Quantidade de Vendas Diárias
+            </h5>
+            <div id="dailySalesQuantityChart"></div>
+        </div>
+
+        <script>
+            var dates_sale = JSON.parse('{{ dates_sales|safe }}');
+            var sales_sale = JSON.parse('{{ values_sales|safe }}');
+            /*  Gráfico Superior Esquerdo -    */
+            var config_sales = {
+                x: dates_sale,
+                y: sales_sale,
+                type: 'scatter',
+                mode: 'lines+markers',
+                line: { color: '#00d4ff', width: 3 }
+            };
+
+            var layout_sale = {
+                paper_bgcolor: '#212529',
+                plot_bgcolor: '#212529',
+                font: { color: '#e0e0e0' },
+                xaxis: { gridcolor: '#333' },
+                yaxis: { gridcolor: '#333' }
+            };
+
+            Plotly.newPlot('dailySalesChart', [config_sales], layout_sale);
+            /*  Gráfico Superior Direito -    */
+            
+        </script>
+    </div>
+
 {% endblock %}
