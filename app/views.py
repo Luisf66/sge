@@ -13,12 +13,20 @@ def home(request):
 
     daily_sales_quantity_data = metrics.get_daily_sales_quantity_data()
 
+    graphic_product_category_metric = metrics.get_product_count_by_category()
+    graphic_product_brand_metric = metrics.get_graphic_product_brand_metric()
+
     context = {
         'product_metrics' : product_metrics,
         'sales_metrics' : sales_metrics,
         'dates_sales' : json.dumps(dates_sales),
         'values_sales' : json.dumps(values_sales, default=float),
-        'daily_sales_quantity_data' : json.dumps(daily_sales_quantity_data)
+        'daily_sales_quantity_data' : json.dumps(daily_sales_quantity_data),
+        'product_count_by_category' : json.dumps(graphic_product_category_metric),
+        'product_count_by_brand' : json.dumps(graphic_product_brand_metric),
     }
+
+    print(f'Graphic Product Category Metric: {graphic_product_category_metric}')
+    print(f'Graphic Product Brand Metric: {graphic_product_brand_metric}')
 
     return render(request, 'home.html', context)

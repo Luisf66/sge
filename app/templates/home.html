@@ -55,9 +55,9 @@
             var config_sales_quantity = {
                 x: dates_quantity_sales.dates,
                 y: dates_quantity_sales.values,
-                type: 'scatter',
+                type: 'bar',
                 mode: 'lines+markers',
-                line: { color: '#00d4ff', width: 3 }
+                line: { color: '#a61a44', width: 3 }
             };
 
             var layout_sale_quantity = {
@@ -69,6 +69,32 @@
             };
 
             Plotly.newPlot('dailySalesQuantityChart', [config_sales_quantity], layout_sale_quantity);
+        </script>
+    </div>
+
+    <div class="row mt-4 justify-content-center">
+        <div class="col-md-6 text-center">
+            <h5 class="mb-3">
+                Produtos por Categoria
+            </h5>
+            <div class="mb-4"></div>
+            <div class="embed-responsive embed-responsive-1by1" style="width: 400px; display: inline-block;">
+                <div id="productByCategoryChart" class="embed-responsive-item"></div>
+            </div>
+        </div>
+
+        <div class="col-md-6 text-center">
+            <h5 class="mb-3">
+                Produtos por Marca
+            </h5>
+            <div class="mb-4"></div>
+            <div style="width: 400px; display: inline-block;">
+                <div id="productByBrandChart" class="embed-responsive-item"></div>
+            </div>
+        </div>
+
+        <script>
+            ...
         </script>
     </div>
 

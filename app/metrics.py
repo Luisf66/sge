@@ -4,6 +4,8 @@ from django.db.models import Sum, F
 
 from products.models import Product
 from outflows.models import Outflow
+from categories.models import Categories
+from brand.models import Brand
 
 
 def get_product_metrics():
@@ -66,3 +68,17 @@ def get_daily_sales_quantity_data():
         dates=dates,
         values=quantities
     )
+
+def get_product_count_by_category():
+    categories = Categories.objects.all()
+
+    return {
+        category.name: Product.objects.filter(category=category).count() for category in categories
+    }
+
+def get_graphic_product_brand_metric():
+    brands = Brand.objects.all()
+
+    return {
+        brand.name: Product.objects.filter(brand=brand).count() for brand in brands
+    }
