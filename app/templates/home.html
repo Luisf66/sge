@@ -1,0 +1,170 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    SGE - Home
+{% endblock %}
+
+{% block content %}
+    
+    {% include 'components/_product_metrics.html' %}
+
+    {% include 'components/_sales_metrics.html' %}
+
+    <script src="https://cdn.plot.ly/plotly-3.3.0.min.js" charset="utf-8"></script>
+    
+
+    <div class="row mt-4 justify-content-center">
+        <div class="col-md-6 text-center">
+            <h5 class="text-center mb-3">
+                Valor de Vendas (7 dias)
+            </h5>
+            <div id="dailySalesChart"></div>
+        </div>
+
+        <div class="col-md-6 text-center">
+            <h5 class="text-center mb-3">
+                Quantidade de Vendas Diárias
+            </h5>
+            <div id="dailySalesQuantityChart"></div>
+        </div>
+
+        <script>
+            var dates_sale = JSON.parse('{{ dates_sales|safe }}');
+            var sales_sale = JSON.parse('{{ values_sales|safe }}');
+
+            var dates_quantity_sales = JSON.parse('{{ daily_sales_quantity_data|safe }}');
+            /*  Gráfico Superior Esquerdo -    */
+            var config_sales = {
+                x: dates_sale,
+                y: sales_sale,
+                type: 'scatter',
+                mode: 'lines+markers',
+                line: { color: '#00d4ff', width: 3 }
+            };
+
+            var layout_sale = {
+                paper_bgcolor: '#212529',
+                plot_bgcolor: '#212529',
+                font: { color: '#e0e0e0' },
+                xaxis: { gridcolor: '#333' },
+                yaxis: { gridcolor: '#333' }
+            };
+
+            Plotly.newPlot('dailySalesChart', [config_sales], layout_sale);
+            /*  Gráfico Superior Direito -    */
+            var config_sales_quantity = {
+                x: dates_quantity_sales.dates,
+                y: dates_quantity_sales.values,
+                type: 'bar',
+                mode: 'lines+markers',
+                line: { color: '#a61a44', width: 3 }
+            };
+
+            var layout_sale_quantity = {
+                paper_bgcolor: '#212529',
+                plot_bgcolor: '#212529',
+                font: { color: '#e0e0e0' },
+                xaxis: { gridcolor: '#333' },
+                yaxis: { gridcolor: '#333' }
+            };
+
+            Plotly.newPlot('dailySalesQuantityChart', [config_sales_quantity], layout_sale_quantity);
+        </script>
+    </div>
+
+    <div class="row mt-4 justify-content-center">
+        <div class="col-md-6 text-center">
+            <h5 class="mb-3">
+                Produtos por Categoria
+            </h5>
+            <div class="mb-4"></div>
+            <div class="embed-responsive embed-responsive-1by1" style="width: 400px; display: inline-block;">
+                <div id="productByCategoryChart" class="embed-responsive-item"></div>
+            </div>
+        </div>
+
+        <div class="col-md-6 text-center">
+            <h5 class="mb-3">
+                Produtos por Marca
+            </h5>
+            <div class="mb-4"></div>
+            <div style="width: 400px; display: inline-block;">
+                <div id="productByBrandChart" class="embed-responsive-item"></div>
+            </div>
+        </div>
+
+        <script>
+            var category = JSON.parse('{{ graphic_product_category_metric|safe }}')
+            var category_label = Object.keys(category);
+            var category_values = Object.values(category);
+
+            var config_category = [{
+                values: category_values,
+                labels: category_label,
+                domain: {column: 0},
+                name: 'Categoria',
+                hoverinfo: 'label+percent+name',
+                hole: .4,
+                type: 'pie'
+            }];
+
+            var layout_category = {
+                annotations: [
+                    {
+                        font: {
+                            size: 20
+                        },
+                        showarrow: false,
+                        text: '',
+                        x: 0.17,
+                        y: 0.5
+                    }
+                ],
+                showlegend: false,
+                grid: {rows: 1, columns: 1},
+                paper_bgcolor: '#212529',
+                plot_bgcolor: '#212529',
+            };
+
+            Plotly.newPlot('productByCategoryChart', config_category, layout_category);
+
+            /* --- */
+
+            var brand = JSON.parse('{{ graphic_product_brand_metric|safe }}')
+            var brand_label = Object.keys(brand);
+            var brand_values = Object.values(brand);
+
+            var config_brand = [{
+                values: brand_values,
+                labels: brand_label,
+                domain: {column: 0},
+                name: 'Marca',
+                hoverinfo: 'label+percent+name',
+                hole: .4,
+                type: 'pie'
+            }];
+
+            var layout_brand = {
+                annotations: [
+                    {
+                        font: {
+                            size: 20
+                        },
+                        showarrow: false,
+                        text: '',
+                        x: 0.17,
+                        y: 0.5
+                    }
+                ],
+                showlegend: false,
+                grid: {rows: 1, columns: 1},
+                paper_bgcolor: '#212529',
+                plot_bgcolor: '#212529',
+            };
+
+            Plotly.newPlot('productByBrandChart', config_brand, layout_brand);
+
+        </script>
+    </div>
+
+{% endblock %}
