@@ -24,9 +24,8 @@ def home(request):
         'daily_sales_quantity_data' : json.dumps(daily_sales_quantity_data),
         'product_count_by_category' : json.dumps(graphic_product_category_metric),
         'product_count_by_brand' : json.dumps(graphic_product_brand_metric),
+        'graphic_product_category_metric' : json.dumps(graphic_product_category_metric),
+        'graphic_product_brand_metric' : json.dumps(graphic_product_brand_metric)
     }
-
-    print(f'Graphic Product Category Metric: {graphic_product_category_metric}')
-    print(f'Graphic Product Brand Metric: {graphic_product_brand_metric}')
 
     return render(request, 'home.html', context)

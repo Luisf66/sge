@@ -94,7 +94,76 @@
         </div>
 
         <script>
-            ...
+            var category = JSON.parse('{{ graphic_product_category_metric|safe }}')
+            var category_label = Object.keys(category);
+            var category_values = Object.values(category);
+
+            var config_category = [{
+                values: category_values,
+                labels: category_label,
+                domain: {column: 0},
+                name: 'Categoria',
+                hoverinfo: 'label+percent+name',
+                hole: .4,
+                type: 'pie'
+            }];
+
+            var layout_category = {
+                annotations: [
+                    {
+                        font: {
+                            size: 20
+                        },
+                        showarrow: false,
+                        text: '',
+                        x: 0.17,
+                        y: 0.5
+                    }
+                ],
+                showlegend: false,
+                grid: {rows: 1, columns: 1},
+                paper_bgcolor: '#212529',
+                plot_bgcolor: '#212529',
+            };
+
+            Plotly.newPlot('productByCategoryChart', config_category, layout_category);
+
+            /* --- */
+
+            var brand = JSON.parse('{{ graphic_product_brand_metric|safe }}')
+            var brand_label = Object.keys(brand);
+            var brand_values = Object.values(brand);
+
+            var config_brand = [{
+                values: brand_values,
+                labels: brand_label,
+                domain: {column: 0},
+                name: 'Marca',
+                hoverinfo: 'label+percent+name',
+                hole: .4,
+                type: 'pie'
+            }];
+
+            var layout_brand = {
+                annotations: [
+                    {
+                        font: {
+                            size: 20
+                        },
+                        showarrow: false,
+                        text: '',
+                        x: 0.17,
+                        y: 0.5
+                    }
+                ],
+                showlegend: false,
+                grid: {rows: 1, columns: 1},
+                paper_bgcolor: '#212529',
+                plot_bgcolor: '#212529',
+            };
+
+            Plotly.newPlot('productByBrandChart', config_brand, layout_brand);
+
         </script>
     </div>
 
