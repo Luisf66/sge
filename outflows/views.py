@@ -1,5 +1,6 @@
-from django.views.generic import CreateView, ListView, DetailView
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
+from django.views.generic import CreateView, ListView, DetailView
 
 from app.metrics import get_sales_metrics
 from . import models
@@ -7,13 +8,13 @@ from . import forms
 # Create your views here.
 
 
-class OutflowCreateView(CreateView):
+class OutflowCreateView(LoginRequiredMixin ,CreateView):
     model = models.Outflow
     template_name = 'outflow_create.html'
     form_class = forms.OutflowForm
     success_url = reverse_lazy('outflow_list')
 
-class OutflowListView(ListView):
+class OutflowListView(LoginRequiredMixin ,ListView):
     model = models.Outflow
     template_name = 'outflow_list.html'
     context_object_name = 'outflows'
@@ -33,6 +34,6 @@ class OutflowListView(ListView):
         context['sales_metrics'] = get_sales_metrics()
         return context
     
-class OutflowDetailView(DetailView):
+class OutflowDetailView(LoginRequiredMixin ,DetailView):
     model = models.Outflow
     template_name = 'outflow_detail.html'
