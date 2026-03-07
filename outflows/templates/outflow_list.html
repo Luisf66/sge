@@ -21,13 +21,15 @@ SGE - Saídas
         </form>
     </div>
 
-    <div class="col-md-6">
-        <a href="{% url 'outflow_create' %}" class="btn btn-success float-end">
-            <i class="bi bi-plus">
-                Registrar Saída
-            </i>
-        </a>
-    </div>
+    {% if perms.outflows.add_outflow %}
+        <div class="col-md-6">
+            <a href="{% url 'outflow_create' %}" class="btn btn-success float-end">
+                <i class="bi bi-plus">
+                    Registrar Saída
+                </i>
+            </a>
+        </div>
+    {% endif %}
 </div>
 
 <div class="table-responsive">
@@ -50,9 +52,11 @@ SGE - Saídas
                 <td>{{ outflow.quantity }}</td>
                 <td>{{ outflow.created_at }}</td>
                 <td>
-                    <a href="{% url 'outflow_detail' outflow.id %}" class="btn btn-info btn-sm">
-                        <i class="bi bi-eye"></i>
-                    </a>
+                    {% if perms.outflows.view_outflow %}
+                        <a href="{% url 'outflow_detail' outflow.id %}" class="btn btn-info btn-sm">
+                            <i class="bi bi-eye"></i>
+                        </a>
+                    {% endif %}
                 </td>
             </tr>
             {% endfor %}
