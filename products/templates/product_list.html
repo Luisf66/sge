@@ -6,8 +6,9 @@ SGE - Produtos
 
 {% block content %}
 
-{% include 'components/_product_metrics.html' %}
-
+{% if perms.products.view_product and perms.inflows.view_inflow %}
+    {% include 'components/_product_metrics.html' %}
+{% endif %}
 <div class="mb-4"></div>
 
 <div class="row mb-3">

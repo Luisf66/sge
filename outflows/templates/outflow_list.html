@@ -6,8 +6,9 @@ SGE - Saídas
 
 {% block content %}
 
-{% include 'components/_sales_metrics.html' %}
-
+{% if perms.outflows.view_outflow %}
+    {% include 'components/_sales_metrics.html' %}
+{% endif %}
 
 <div class="row mb-3">
     <div class="col-md-6">
