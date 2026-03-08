@@ -1,10 +1,19 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView
 
-from . import models
-from . import forms
+from rest_framework import generics
+from . import serializers, models, forms
 
+class SupplierListCreateApiView(generics.ListCreateAPIView):
+    queryset = models.Supplier.objects.all()
+    serializer_class = serializers.SupplierSerializer
+
+class SupplierRetrieveUpdateDestroyApiView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = models.Supplier.objects.all()
+    serializer_class = serializers.SupplierSerializer
+    
 # Create your views here.
 class SupplierCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = models.Supplier

@@ -1,9 +1,19 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView
 
-from . import models
-from . import forms
+from rest_framework import generics
+from . import serializers, models, forms
+
+
+class BrandListCreateApiView(generics.ListCreateAPIView):
+    queryset = models.Brand.objects.all()
+    serializer_class = serializers.BrandSerializer
+
+class BrandRetrieveUpdateDestroyApiView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = models.Brand.objects.all()
+    serializer_class = serializers.BrandSerializer
 
 class BrandCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = models.Brand

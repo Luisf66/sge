@@ -1,9 +1,19 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import CreateView, ListView, DetailView
 
-from . import models
-from . import forms
+from rest_framework import generics
+from . import serializers, models, forms
+
+
+class InflowListCreateApiView(generics.ListCreateAPIView):
+    queryset = models.Inflow.objects.all()
+    serializer_class = serializers.InflowSerializer
+
+class InflowRetrieveApiView(generics.RetrieveAPIView):
+    queryset = models.Inflow.objects.all()
+    serializer_class = serializers.InflowSerializer
 
 # Create your views here.
 class InflowCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
