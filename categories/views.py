@@ -1,10 +1,14 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView
 
-from . import models
-from . import forms
+from rest_framework import generics
+from . import serializers, models, forms
 
+
+class CategoryListCreateApiView(generics.ListCreateAPIView):
+    queryset = models.Categories.objects.all()
+    serializer_class = serializers.CategorySerializer
 
 # Create your views here.
 class CategoryCreateView(LoginRequiredMixin ,CreateView):
