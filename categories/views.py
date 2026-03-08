@@ -10,6 +10,10 @@ class CategoryListCreateApiView(generics.ListCreateAPIView):
     queryset = models.Categories.objects.all()
     serializer_class = serializers.CategorySerializer
 
+class CategoryRetrieveUpdateDestroyApiView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = models.Categories.objects.all()
+    serializer_class = serializers.CategorySerializer
+
 # Create your views here.
 class CategoryCreateView(LoginRequiredMixin ,CreateView):
     model = models.Categories
