@@ -18,13 +18,15 @@ SGE - Marcas
         </form>
     </div>
 
-    <div class="col-md-6">
-        <a href="{% url 'brand_create' %}" class="btn btn-success float-end">
-            <i class="bi bi-plus">
-                Adicionar Marca
-            </i>
-        </a>
-    </div>
+    {% if perms.brand.add_brand %}
+        <div class="col-md-6">
+            <a href="{% url 'brand_create' %}" class="btn btn-success float-end">
+                <i class="bi bi-plus">
+                    Adicionar Marca
+                </i>
+            </a>
+        </div>
+    {% endif %}
 </div>
 
 <div class="table-responsive">
@@ -45,17 +47,23 @@ SGE - Marcas
                 <td>{{ brand.name }}</td>
                 <td>{{ brand.description }}</td>
                 <td>
-                    <a href="{% url 'brand_detail' brand.id %}" class="btn btn-info btn-sm">
-                        <i class="bi bi-eye"></i>
-                    </a>
+                    {% if perms.brand.view_brand %}
+                        <a href="{% url 'brand_detail' brand.id %}" class="btn btn-info btn-sm">
+                            <i class="bi bi-eye"></i>
+                        </a>
+                    {% endif %}
 
-                    <a href="{% url 'brand_update' brand.id %}" class="btn btn-warning btn-sm">
-                        <i class="bi bi-pencil"></i>
-                    </a>
+                    {% if perms.brand.change_brand %}
+                        <a href="{% url 'brand_update' brand.id %}" class="btn btn-warning btn-sm">
+                            <i class="bi bi-pencil"></i>
+                        </a>
+                    {% endif %}
 
-                    <a href="{% url 'brand_delete' brand.id %}" class="btn btn-danger btn-sm">
-                        <i class="bi bi-trash"></i>
-                    </a>
+                    {% if perms.brand.delete_brand %}
+                        <a href="{% url 'brand_delete' brand.id %}" class="btn btn-danger btn-sm">
+                            <i class="bi bi-trash"></i>
+                        </a>
+                    {% endif %}
                 </td>
             </tr>
             {% endfor %}

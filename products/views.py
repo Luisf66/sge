@@ -1,42 +1,82 @@
-from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView
 
-from . import models
-from . import forms
+from app import metrics
+from brand.models import Brand
+from categories.models import Categories
+
+from rest_framework import generics
+from . import serializers, models, forms
+
+
+class ProductListCreateApiView(generics.ListCreateAPIView):
+    queryset = models.Product.objects.all()
+    serializer_class = serializers.ProductSerializer
+
+class ProductRetrieveUpdateDestroyApiView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = models.Product.objects.all()
+    serializer_class = serializers.ProductSerializer
 
 # Create your views here.
-class ProductCreateView(CreateView):
+class ProductCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = models.Product
     template_name = 'product_create.html'
     form_class = forms.ProductForm
     success_url = reverse_lazy('product_list')
+    permission_required = 'products.add_product'
 
-class ProductListView(ListView):
+class ProductListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     model = models.Product
     template_name = 'product_list.html'
     context_object_name = 'products'
     paginate_by = 10
+    permission_required = 'products.view_product'
+
 
     def get_queryset(self):
         queryset = super().get_queryset()
         title = self.request.GET.get('title')
+        serie_number = self.request.GET.get('serie_number')
+        category = self.request.GET.get('category')
+        brand = self.request.GET.get('brand')
 
         if title:
             queryset = queryset.filter(title__icontains=title)
 
+        if serie_number:
+            queryset = queryset.filter(serie_number__icontains=serie_number)
+
+        if category:
+            queryset = queryset.filter(category__id=category)
+
+        if brand:
+            queryset = queryset.filter(brand__id=brand)
+
         return queryset
     
-class ProductDetailView(DetailView):
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['product_metrics'] = metrics.get_product_metrics()
+        context['categories'] = Categories.objects.all()
+        context['brands'] = Brand.objects.all()
+        return context
+    
+class ProductDetailView(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
     model = models.Product
     template_name = 'product_detail.html'
+    permission_required = 'products.view_product'
 
-class ProductUpdateView(UpdateView):
+class ProductUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = models.Product
     template_name = 'product_update.html'
     form_class = forms.ProductForm
     success_url = reverse_lazy('product_list')
+    permission_required = 'products.change_product'
 
-class ProductDeleteView(DeleteView):
+class ProductDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     model = models.Product
     template_name = 'product_delete.html'
     success_url = reverse_lazy('product_list')
+    permission_required = 'products.delete_product'
