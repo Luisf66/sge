@@ -2,6 +2,9 @@
 FROM python:3.11-slim  
 # Diretório de trabalho dentro do container
 WORKDIR /sge
+# Variáveis de ambiente para logs
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
 # Copia os arquivos do host para o container
 COPY . .
 # Atualiza o PIP
